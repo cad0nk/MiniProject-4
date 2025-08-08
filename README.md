@@ -37,21 +37,37 @@ Answer: K34EN6W3N-PC<00>
 Step: Apply filter nbns and inspect Name Query Request packet where source is 172.16.165.165. The hostname is retrieved from NBNS traffic where the infected system broadcasts its NetBIOS name, which is common in Windows environments.
 
 3) What is the MAC address of the infected VM?
+
+<img width="1205" height="90" alt="question3" src="https://github.com/user-attachments/assets/e0784a03-a57d-4dc4-b905-e3e3f3317463" />
+
 Answer: f0:19:af:02:9b:f1
 Step: Inspect Ethernet II header for packets sourced from 172.16.165.165. This MAC consistently appears as the source in relevant traffic, confirming it as the infected host’s hardware address.
 
+
 4) What is the IP address of the compromised web site?
+
+<img width="1919" height="1021" alt="question4" src="https://github.com/user-attachments/assets/9f2a4ba6-4b92-4b55-a306-8013a38f77a3" />
+
 Answer: 82.150.140.30
 Step: Find HTTP traffic from the infected host to www.ciniholland.nl. DNS resolution or IP header inspection shows this domain maps to 82.150.140.30. There is a large volume of unusual traffic from the infected host to this IP, including requests for JavaScript and image files that trigger redirects.
 
 5) What is the domain name of the compromised web site?
+
+<img width="1919" height="1022" alt="question5" src="https://github.com/user-attachments/assets/a96e9541-82ce-419c-b0a1-236b62ee2881" />
+
 Answer: www.ciniholland.nl
 Step: The infected host accessed several files from this domain. A particular .jpg file caused the host to redirect to another domain that eventually served an exploit. This behavior strongly suggests the image was a decoy and the site was compromised to host malicious scripts or redirects.
 
 6) What is the IP address that delivered the exploit kit and malware?
+
+<img width="1919" height="1022" alt="question6" src="https://github.com/user-attachments/assets/87ed474e-fcd4-4ef3-9e9a-bd141513cabd" />
+
 Answer: 37.200.69.143
 Step: Follow the redirect chain initiated by traffic from ciniholland.nl. The final domain contacted was stand.trustandprobaterealty.com, which resolves to this IP. The consistent appearance of this IP in requests to index.php?req=... indicates it hosted the actual malware payload.
 
 7) What is the domain name that delivered the exploit kit and malware?
+
+<img width="1919" height="1022" alt="question6" src="https://github.com/user-attachments/assets/87ed474e-fcd4-4ef3-9e9a-bd141513cabd" />
+
 Answer: stand.trustandprobaterealty.com
 Step: This domain appears after the infected machine receives a redirect from the compromised site. The format of the URL (index.php?req=...) and the session IDs indicate that this is the malicious server used for the delivery of the exploit kit.
